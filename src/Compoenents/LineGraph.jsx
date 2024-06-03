@@ -17,13 +17,17 @@ const LineGraph = ({ data }) => {
 
     // Count occurrences of each timestamp
     data.forEach(({ timestamp }) => {
-      if (!labels.includes(timestamp.split(" ")[0])) {
-        labels.push(timestamp.split(" ")[0]);
-        counts[timestamp.split(" ")[0]] = 1;
+      const date = timestamp.split(" ")[0];
+      if (!labels.includes(date)) {
+        labels.push(date);
+        counts[date] = 1;
       } else {
-        counts[timestamp.split(" ")[0]]++;
+        counts[date]++;
       }
     });
+    
+    // Sort labels in ascending order
+    labels.sort((a, b) => new Date(a) - new Date(b));
 
     const datasets = [{
       label: 'Number of Issues',
