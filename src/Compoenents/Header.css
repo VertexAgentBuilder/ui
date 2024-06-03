@@ -1,0 +1,39 @@
+.header-container {
+    background-color: #01204E;
+    display: flex;
+    height: 60px;
+    justify-content: space-between;
+    padding: 1.5rem 6rem;
+    position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 999;
+  }
+  
+  .header-logoBar .logo {
+    width: 7rem;
+  }
+  
+  .header-addSelector {
+    color: var(--white-color);
+  }
+  
+  .header-menuBar {
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu-items {
+    font-size: .9rem;
+    padding: 0.5rem;
+    height: 3rem;
+    border: 1px solid transparent;
+    color: var(--white-color);
+    display: flex;
+    align-items: center;
+  }
+  
+  .menu-items:hover {
+    border: 1px solid white;
+  }
+  
