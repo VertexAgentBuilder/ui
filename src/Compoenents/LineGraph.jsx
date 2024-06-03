@@ -17,11 +17,11 @@ const LineGraph = ({ data }) => {
 
     // Count occurrences of each timestamp
     data.forEach(({ timestamp }) => {
-      if (!labels.includes(timestamp)) {
-        labels.push(timestamp);
-        counts[timestamp] = 1;
+      if (!labels.includes(timestamp.split(" ")[0])) {
+        labels.push(timestamp.split(" ")[0]);
+        counts[timestamp.split(" ")[0]] = 1;
       } else {
-        counts[timestamp]++;
+        counts[timestamp.split(" ")[0]]++;
       }
     });
 
