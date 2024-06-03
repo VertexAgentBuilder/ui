@@ -12,24 +12,6 @@
   <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
   <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
 
-  <!-- Conditional rendering based on URL path -->
-  <script>
-    window.addEventListener('DOMContentLoaded', (event) => {
-      const path = window.location.pathname;
-      const dfMessenger = document.createElement('df-messenger');
-      dfMessenger.setAttribute('oauth-client-id', '147260466019-am2q80rp6t0l094beipkk51li55hoecn.apps.googleusercontent.com');
-      dfMessenger.setAttribute('location', 'us-central1');
-      dfMessenger.setAttribute('language-code', 'en');
-      dfMessenger.setAttribute('max-query-length', '200');
-
-      const dfMessengerChatBubble = document.createElement('df-messenger-chat-bubble');
-      dfMessengerChatBubble.setAttribute('chat-title', path === '/policies' ? 'PolicySupport' : 'CustomerCare');
-
-      dfMessenger.appendChild(dfMessengerChatBubble);
-      document.body.appendChild(dfMessenger);
-    });
-  </script>
-
   <style>
     df-messenger {
       z-index: 999;
@@ -38,5 +20,36 @@
       right: 16px;
     }
   </style>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const updateDfMessenger = () => {
+        const path = window.location.pathname;
+        const dfMessenger = document.querySelector('df-messenger');
+        if (dfMessenger) {
+          dfMessenger.remove();
+        }
+        const newDfMessenger = document.createElement('df-messenger');
+        newDfMessenger.setAttribute('oauth-client-id', '147260466019-am2q80rp6t0l094beipkk51li55hoecn.apps.googleusercontent.com');
+        newDfMessenger.setAttribute('location', 'us-central1');
+        newDfMessenger.setAttribute('language-code', 'en');
+        newDfMessenger.setAttribute('max-query-length', '200');
+        if (path === '/policies') {
+          newDfMessenger.setAttribute('project-id', 'local-cogency-413608');
+          newDfMessenger.setAttribute('agent-id', 'fcbd9721-6187-4bac-9e48-7b86c1c835ce');
+          newDfMessenger.setAttribute('chat-title', 'PolicySupport');
+        } else {
+          newDfMessenger.setAttribute('project-id', 'agentbuilderhackathon');
+          newDfMessenger.setAttribute('agent-id', '4fe83929-eb1d-465b-8a99-3b04f1852a0d');
+          newDfMessenger.setAttribute('chat-title', 'CustomerCare');
+        }
+        document.body.appendChild(newDfMessenger);
+      };
+
+      updateDfMessenger();
+
+      window.addEventListener('popstate', updateDfMessenger);
+    });
+  </script>
 </body>
 </html>
