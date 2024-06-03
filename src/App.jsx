@@ -9,6 +9,7 @@ import ProductPaga from "./Pages/ProductPaga";
 import Context from "./ContextApi/Context";
 import Dashboard from "./Pages/Dashboard";
 import PoliciesPage from "./Pages/PoliciesPage";
+import DfMessenger from "./Compoenents/DfMessenger";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path={`/ProductPaga/:id`} element={<ProductPaga />} />
         <Route path={`/policies`} element={<PoliciesPage/>} />
       </Routes>
+      <DfMessenger/>
       <Footer />
     </Context>
   );
