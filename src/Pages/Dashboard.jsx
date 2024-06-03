@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PieChart from '../Compoenents/PieChart';
 import BarGraph from '../Compoenents/BarGraph';
+import LineGraph from '../Compoenents/LineGraph';
 import './Dashboard.css';
 
-const data = [
-  { chat_id: "001", customer_id: "C12345", issue_category: "Technical issues", resolved_status: false },
-  { chat_id: "002", customer_id: "C67890", issue_category: "Billing or Payments issues", resolved_status: true },
-  { chat_id: "003", customer_id: "C54321", issue_category: "Product Enquiries issues", resolved_status: false },
-  { chat_id: "004", customer_id: "C09876", issue_category: "Warranty or Returns issues", resolved_status: true },
-  { chat_id: "005", customer_id: "C11223", issue_category: "Technical issues", resolved_status: true },
-  { chat_id: "006", customer_id: "C44556", issue_category: "Billing or Payments issues", resolved_status: false },
-  { chat_id: "007", customer_id: "C77889", issue_category: "Product Enquiries issues", resolved_status: true },
-  { chat_id: "008", customer_id: "C99001", issue_category: "Warranty or Returns issues", resolved_status: false },
-  { chat_id: "009", customer_id: "C22334", issue_category: "Technical issues", resolved_status: false },
-  { chat_id: "010", customer_id: "C55667", issue_category: "Billing or Payments issues", resolved_status: true }
-];
-
 const Dashboard = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('https://us-central1-agentbuilderhackathon.cloudfunctions.net/process_text/analytics');
+        const responseData = await response.json();
+        setData(responseData.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   const resolvedCount = data.filter(issue => issue.resolved_status).length;
   const unresolvedCount = data.filter(issue => !issue.resolved_status).length;
 
@@ -39,6 +49,10 @@ const Dashboard = () => {
         <div className="chart-wrapper">
           <h2 className="chart-title">Issues by Category</h2>
           <BarGraph issueCounts={issueCounts} />
+        </div>
+        <div className="chart-wrapper">
+          <h2 className="chart-title">Issues Per Day</h2>
+          <LineGraph data={data} />
         </div>
       </main>
     </div>
